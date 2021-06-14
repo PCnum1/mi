@@ -3,19 +3,16 @@
         <div class="container">
             <ul>
                 <li>
-                    <span class="icon-setting">预约维修服务</span>
+                    <span class="icon-setting"></span>预约维修服务
                 </li>
                 <li>
-                    <span class="icon-setting">7天无理由退货</span>
+                    <span class="icon-7day"></span>7天无理由退货
                 </li>
                 <li>
-                    <span class="icon-setting">15天免费换货</span>
+                    <span class="icon-15day"></span>15天免费换货
                 </li>
                 <li>
-                    <span class="icon-setting">满69包邮</span>
-                </li>
-                <li>
-                    <span class="icon-setting">520余家售后网点</span>
+                    <span class="icon-post"></span>满69包邮
                 </li>
             </ul>
         </div>
@@ -29,5 +26,38 @@
 </script>
 
 <style lang="scss">
+@import './../assets/scss/mixin.scss';
+@import './../assets/scss/base.scss';
 
+.service{
+    padding: 33px 0;
+    color: #666666;
+    font-size: 16px;
+    li{
+        display: inline-block;
+        width: 24.8%;
+        text-align: center;
+        border-right: 1px solid #e5e5e5;
+        span{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .icon-setting{
+            @include backImg(20px,20px,'/imgs/icon-setting.png')
+        }
+        .icon-7day{
+            @include backImg(20px,20px,'/imgs/icon-7day.png')
+        }
+        .icon-15day{
+            @include backImg(20px,20px,'/imgs/icon-15day.png')
+        }
+        .icon-post{
+            @include backImg(20px,20px,'/imgs/icon-post.png')
+        }
+
+    }
+}
 </style>

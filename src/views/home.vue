@@ -9,11 +9,12 @@
 <script>
 import NavHeader from '../components/NavHeader.vue'
 import NavFooter from '../components/NavFooter.vue'
+
     export default {
         name: 'home',
         components:{
             NavHeader,
-            NavFooter
+            NavFooter,
         }
     }
 </script>

@@ -198,12 +198,12 @@
                 this.axios.get('/products',{
                     params:{
                         categoryId:'100012',
-                        // pageSize:6
+                        pageSize:6
                     }
                 }).then(res => {
-                    if(res.list.length > 6){
-                        this.phoneList = res.list.splice(0,6);
-                    }
+  
+                    this.phoneList = res.list;
+                  
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -305,6 +305,7 @@
                         height: 0px;
                         opacity: 0;
                         overflow: hidden;
+                        background: #ffffff;
                         transition: all .5s;
                         border-top:1px solid #E5E5E5;
                         box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, .11);
