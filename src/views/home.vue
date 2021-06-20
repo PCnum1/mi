@@ -20,5 +20,5 @@ import NavFooter from '../components/NavFooter.vue'
 </script>
 
 <style lang="scss" scoped>
-
+@import './../assets/scss/base.scss';
 </style>

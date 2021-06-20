@@ -72,12 +72,12 @@
             </div>
             <div class="ads-box">
                 <a :href="'/#/product/'+item.id" v-for="(item,index) in adsList" :key="index">
-                    <img :src="item.img">
+                    <img v-lazy="item.img">
                 </a>
             </div>
             <div class="banner">
                 <a href="/#/product/30">
-                    <img src="/imgs/banner-1.png" alt="">
+                    <img v-lazy="'/imgs/banner-1.png'" alt="">
                 </a>
             </div>
         </div>
@@ -95,12 +95,12 @@
                             <div class="item" v-for="(item,index1) in arr" :key="index1">
                                 <span :class="index1 % 2 === 0? 'new-pro': 'kill-pro'">新品</span>
                                 <div class="item-img">
-                                    <img :src="item.mainImage">
+                                    <img v-lazy="item.mainImage">
                                 </div>
                                 <div class="item-info">
                                     <h3>{{item.name}}</h3>
                                     <p>{{item.subtitle}}</p>
-                                    <p class="price">{{item.price}}元</p>
+                                    <p class="price" @click="addCart(item.id)">{{item.price}}元</p>
                                 </div>
                             </div>
                         </div>
@@ -109,19 +109,34 @@
             </div>
         </div>
         <service-bar></service-bar>
+        <modal 
+            title="提示" 
+            sureText="查看购物车" 
+            btnType="1" 
+            modalType="middle" 
+            :showModal="showModal"
+            @submit="gotoCart"
+            @cancel="showModal = false"
+        >
+            <template v-slot:body>
+                <p>商品添加成功!</p>
+            </template>
+        </modal>
     </div>
 </template>
 
 <script>
-import ServiceBar from '@/components/ServiceBar.vue'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
-require('swiper/dist/css/swiper.css')
+import ServiceBar from '@/components/ServiceBar.vue';
+import Modal from '@/components/Modal.vue';
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
+require('swiper/dist/css/swiper.css');
     export default {
         name: 'index',
         components:{
             swiper,
             swiperSlide,
-            ServiceBar
+            ServiceBar,
+            Modal
         },
         data(){
             return{
@@ -206,7 +221,8 @@ require('swiper/dist/css/swiper.css')
                         img:'/imgs/ads/ads-4.jpg',
                     },
                 ],
-                phoneList:[]
+                phoneList:[],
+                showModal: false
             }
         },
         mounted(){
@@ -214,9 +230,24 @@ require('swiper/dist/css/swiper.css')
         },
         methods:{
             init(){
-                this.axios.get('/products',{params:{categoryId:100012,pageSize:8}}).then((res)=>{
+                this.axios.get('/products',{params:{categoryId:100012,pageSize:14}}).then((res)=>{
+                    res.list = res.list.slice(6,14);
                     this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)]
                 })
+            },
+            addCart(id){
+                this.axios.post('/carts',{
+                    productId:id,
+                    selected:true
+                }).then((res)=>{
+                    this.showModal = true
+                    this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
+                }).catch(()=>{
+                    this.showModal = true
+                })
+            },
+            gotoCart(){
+                this.$router.push('/cart');
             }
         }
     }
