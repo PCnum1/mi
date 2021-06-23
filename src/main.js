@@ -6,6 +6,8 @@ import router from './router'
 import VueCookie from 'vue-cookie'
 import App from './App.vue'
 import VueLazyLoad from 'vue-lazyload'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 // import env from './env'
 const mock = false
@@ -27,7 +29,6 @@ axios.interceptors.response.use(function(response){
     }
     return new Promise.reject(res);
   }else{
-    alert(res.msg)
     return new Promise.reject(res);
   }
 })
@@ -37,7 +38,9 @@ Vue.use(VueCookie)
 Vue.use(VueLazyLoad,{
   loading:'/imgs/loading-svg/loading-bars.svg'
 })
-Vue.config.productionTip = false
+// Vue.use(Message)
+Vue.prototype.$message = Message;
+Vue.config.productionTip = false;
 
 new Vue({
   store,

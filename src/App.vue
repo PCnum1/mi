@@ -19,7 +19,6 @@ export default {
   methods:{
     getUser(){
       this.axios.get('/user').then((res={})=>{
-        console.log(res);
         this.$store.dispatch('saveUserName',res.username)
       })
     },
@@ -30,8 +29,10 @@ export default {
     }
   },
   mounted(){
-    this.getUser()
-    this.getCartCount()
+    if(this.$cookie.get('userId')){
+      this.getUser()
+      this.getCartCount()
+    }
   }
 }
 </script>

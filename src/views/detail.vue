@@ -103,7 +103,6 @@ export default{
         this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
         this.$router.push('/cart');
       })
-      
     }
   }
 }
