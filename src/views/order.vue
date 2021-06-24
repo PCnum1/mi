@@ -33,12 +33,15 @@ import ServiceBar from './../components/ServiceBar.vue';
             if(path === '/order/confirm'){
                 this.title = '订单确认';
                 this.tip = '请认真填写收货地址';
-            }else if(path === '/order/list'){
+            }else if(path == '/order/list'){
                 this.title = '订单列表';
-                this.tip = '请谨防钓鱼链接或诈骗电话，了解更多>';
-            }else if(path === '/order/pay'){
+                this.tip = '喜欢请尽快下单哦，宝贝不多，数量有限';
+            }else if(path == '/order/pay'){
                 this.title = '订单支付';
-                this.tip = '请谨防钓鱼链接或诈骗电话，了解更多>';
+                this.tip = '请谨防钓鱼链接或诈骗电话';
+            }else{
+                this.title = '订单支付';
+                this.tip = '请谨防钓鱼链接或诈骗电话';
             }
         },
         methods:{
