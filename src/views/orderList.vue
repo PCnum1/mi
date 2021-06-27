@@ -46,6 +46,15 @@
                           </div>
                       </div>
                   </div>
+                  <el-pagination
+                    background
+                    layout="prev,pager,next"
+                    :pageSize="pageSize"
+                    :total="total"
+                    @current-change="handleChange"
+                    class="pagination"
+                  >
+                  </el-pagination>
                   <no-data v-if="!loading && list.length == 0"></no-data>
                 </div>
             </div>
@@ -57,18 +66,23 @@
 import OrderHeader from './../components/OrderHeader.vue'
 import Loading from './../components/Loading.vue'
 import NoData from './../components/NoData.vue'
+import { Pagination } from 'element-ui'
 
     export default {
         name: 'orderList',
         components:{
             OrderHeader,
             Loading,
-            NoData
+            NoData,
+            [Pagination.name]:Pagination
         },
         data(){
             return{
                 list:[],
-                loading:true
+                loading:true,
+                pageSize:10,
+                pageNum:1,
+                total:0
             }
         },
         mounted(){
@@ -76,9 +90,15 @@ import NoData from './../components/NoData.vue'
         },
         methods:{
             getOrderList(){
-                this.axios.get('/orders').then(res=>{
+                this.axios.get('/orders',{
+                  params:{
+                    pageNum:this.pageNum,
+                    pageSize:this.pageSize
+                  }
+                }).then(res=>{
                     this.loading = false
                     this.list = res.list
+                    this.total = res.total
                 }).catch(()=>{
                   this.loading = false
                 })
@@ -90,6 +110,10 @@ import NoData from './../components/NoData.vue'
                         orderNo
                     }
                 })
+            },
+            handleChange(pageNum){
+              this.pageNum = pageNum
+              this.getOrderList()
             }
         }
     }
